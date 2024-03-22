@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+
+import reportWebVitals from './reportWebVitals';
+import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import Layout from './Layout';
+import Category from './Components/Category/Category';
+import SubCategory from './Components/SubCategory/SubCategory';
+import Meal from './Components/Meal/Meal';
+
+
+
+
 
 function App() {
+  const [Discription, setDiscription] = useState('')
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/' element={<Layout/>}>
+        <Route path='' element={<Category  setDiscription={setDiscription}/>}/>
+        <Route path='/subcategory/:subcategory' element={<SubCategory Discription={Discription} />}/>
+        <Route path='/meal/:mealId' element={<Meal/>}/>
+      </Route>
+    )
+  )
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <RouterProvider router={router}>  
+      </RouterProvider>
   );
 }
 
